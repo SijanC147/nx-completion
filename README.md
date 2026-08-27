@@ -6,9 +6,23 @@
 
 ## Features
 
-- Commands and arguments autocompletion
-- Projects, targets, and generators autocompletion
-- Support different workspace versions
+- ✅ **Dynamic command & option parsing**
+  Automatically discovers and updates completions from `nx --help` output
+
+- 🚀 **Intelligent caching = blazing fast completions**
+  Leverages Nx’s project graph cache and memoized command parsing
+
+- 🧠 **Workspace-aware, always up-to-date**
+  Auto-syncs completions with your Nx version, project executors, and custom generators
+
+- 🧩 **Deep integration with Nx executors**
+  Extracts and completes custom workspace commands, targets, and options
+
+- ✨ **Smart autocompletion**
+  Supports arguments, flags, projects, targets, and generators—all in context
+
+- 📦 **Version flexibility**
+  Works seamlessly across different Nx workspace versions
 
 ## Install
 
@@ -20,7 +34,7 @@ Install [`jq`](https://stedolan.github.io/jq/) dependency:
 apt install jq
 ```
 
-On MacOS you can install with: 
+On MacOS you can install with:
 
 ```shell
 brew install jq
@@ -55,6 +69,66 @@ Then source it in your `.zshrc`:
 ```shell
 source ~/.nx-completion/nx-completion.plugin.zsh
 ```
+
+## Cache Management
+
+When reinstalling or updating the nx-completion plugin, you may need to flush the zsh completion cache to ensure you're using the latest version.
+
+### Quick Cache Clear
+
+The simplest way to clear the zsh completion cache:
+
+```shell
+# Clear zsh completion cache and rebuild
+rm -rf ~/.zcompdump* && autoload -U compinit && compinit -D
+```
+
+### Using the Clear Cache Script
+
+Run the included script for automated cache clearing:
+
+```shell
+# Make executable and run
+chmod +x clear-cache.zsh
+./clear-cache.zsh
+```
+
+## Testing
+
+This repository includes a comprehensive test environment in the `test/` directory with simplified project structures for easy testing and development.
+
+### Test Environment Structure
+
+```
+test/
+├── .nx/workspace-data/project-graph.json  # Main test graph (.nodes structure)
+├── nx.json                                # Nx workspace config
+├── project-graph-nested.json              # Test graph (.graph.nodes structure)
+├── test-completion.zsh                    # Automated test script
+├── test-cache.zsh                         # Cache performance test script
+├── PERFORMANCE-TESTING.md                 # Real-world performance testing guide
+└── README.md                              # Test environment docs
+```
+
+### Quick Testing
+
+```bash
+# Run automated tests
+cd test && ./test-completion.zsh
+
+# Test caching performance
+cd test && ./test-cache.zsh
+
+# Interactive completion testing
+cd test
+source ../nx-completion.plugin.zsh
+nx <TAB>  # Test completions
+
+# Performance testing guide
+cd test && cat PERFORMANCE-TESTING.md
+```
+
+The test environment includes 5 projects (frontend-app, backend-api, shared-utils, ui-components, data-access) with realistic Nx configurations and supports testing both JSON structure formats.
 
 ## License
 
